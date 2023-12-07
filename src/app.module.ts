@@ -3,6 +3,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { StatesModule } from './states/states.module';
+import { JwtStrategy } from './auth/strategy';
+import { CitiesModule } from './cities/cities.module';
+import { PlacesModule } from './places/places.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -27,8 +32,12 @@ import { UserModule } from './user/user.module';
     }),
     AuthModule,
     UserModule,
+    StatesModule,
+    CitiesModule,
+    PlacesModule,
+    ReviewsModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [JwtStrategy],
 })
 export class AppModule {}

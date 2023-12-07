@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/auth/entity';
 import { Repository } from 'typeorm';
@@ -26,12 +26,15 @@ export class UserService {
       throw new Error('Failed to retrieve users.');
     }
   }
-  async getUserById(id: number) {
+  async getUserById(id: string) {
     const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
     user.password = '-';
     return user;
   }
-  async updateUser(id: number, dto: EditDto) {
+  async updateUser(id: string, dto: EditDto) {
     await this.userRepository.update(id, dto);
     return await this.userRepository.findOne({ where: { id } });
   }

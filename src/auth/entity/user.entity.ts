@@ -1,15 +1,17 @@
+import { Places } from 'src/places/entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  OneToMany,
   // OneToMany,
 } from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'text', unique: true })
   email: string;
@@ -23,11 +25,11 @@ export class User {
   @Column({ type: 'text', unique: true })
   password: string;
 
-  // @OneToMany(() => Places, (place) => place.user, {
-  //   cascade: true,
-  //   onDelete: 'CASCADE',
-  // })
-  // places: Places[];
+  @OneToMany(() => Places, (place) => place.user, {
+    // cascade: true,
+    // onDelete: 'CASCADE',
+  })
+  places: Places[];
 
   // @OneToMany(() => Reviews, (review) => review.user, {
   //   cascade: true,
